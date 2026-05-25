@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Munchies — Madurai's Favourite Veg Café</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&family=Cormorant+Garamond:ital,wght@1,300;1,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5EDD8;
+    --cream-dark: #EDE0C4;
+    --olive: #5C6642;
+    --olive-light: #8A9A6A;
+    --terracotta: #C4622D;
+    --terracotta-light: #D4804A;
+    --charcoal: #2C2A25;
+    --warm-white: #FBF7EF;
+    --gold: #C9A84C;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--charcoal);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(245,237,216,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(196,98,45,0.15);
+    transition: all 0.4s;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; font-weight: 900;
+    color: var(--charcoal); letter-spacing: -0.02em;
+  }
+  .nav-logo span { color: var(--terracotta); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.82rem; font-weight: 500; text-decoration: none;
+    color: var(--charcoal); letter-spacing: 0.08em; text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--terracotta); }
+  .nav-cta {
+    background: var(--terracotta); color: #fff;
+    border: none; padding: 0.65rem 1.4rem; border-radius: 2rem;
+    font-family: 'DM Sans', sans-serif; font-size: 0.82rem;
+    font-weight: 500; cursor: pointer; letter-spacing: 0.05em;
+    text-decoration: none; transition: background 0.3s, transform 0.2s;
+    display: flex; align-items: center; gap: 0.4rem;
+  }
+  .nav-cta:hover { background: var(--terracotta-light); transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative; height: 100vh; min-height: 640px;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 50%, rgba(196,98,45,0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 80% at 20% 80%, rgba(92,102,66,0.22) 0%, transparent 60%),
+      linear-gradient(160deg, #2C2A25 0%, #3d3830 40%, #4a3d2e 100%);
+  }
+  /* Decorative food illustration blobs */
+  .hero-blob {
+    position: absolute; border-radius: 50%;
+    background: var(--terracotta); opacity: 0.08;
+    filter: blur(60px);
+  }
+  .hero-blob-1 { width: 500px; height: 500px; top: -100px; right: -100px; animation: float1 8s ease-in-out infinite; }
+  .hero-blob-2 { width: 300px; height: 300px; bottom: -50px; left: 10%; background: var(--olive); animation: float2 10s ease-in-out infinite; }
+
+  @keyframes float1 { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-30px,20px) scale(1.05)} }
+  @keyframes float2 { 0%,100%{transform:translate(0,0) rotate(0deg)} 50%{transform:translate(20px,-20px) rotate(10deg)} }
+
+  /* SVG food accents */
+  .food-accent {
+    position: absolute; opacity: 0.15;
+    animation: floatAccent 6s ease-in-out infinite;
+  }
+  .food-accent-1 { top: 15%; right: 8%; width: 120px; animation-delay: 0s; }
+  .food-accent-2 { bottom: 20%; left: 5%; width: 90px; animation-delay: 2s; }
+  .food-accent-3 { top: 60%; right: 15%; width: 70px; animation-delay: 4s; }
+  @keyframes floatAccent { 0%,100%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-15px) rotate(8deg)} }
+
+  .hero-content {
+    position: relative; z-index: 2; text-align: center;
+    max-width: 800px; padding: 0 2rem;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(201,168,76,0.2); border: 1px solid rgba(201,168,76,0.5);
+    color: var(--gold); font-size: 0.75rem; letter-spacing: 0.18em;
+    text-transform: uppercase; padding: 0.4rem 1.2rem; border-radius: 2rem;
+    margin-bottom: 1.8rem;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-weight: 900; line-height: 1.0;
+    color: var(--cream);
+    animation: fadeUp 0.8s ease 0.2s both;
+  }
+  .hero-title em {
+    display: block; font-style: italic; color: var(--terracotta-light);
+    font-weight: 400;
+  }
+  .hero-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 1.3rem; font-weight: 300;
+    color: rgba(245,237,216,0.7); margin-top: 1.2rem;
+    animation: fadeUp 0.8s ease 0.4s both;
+  }
+  .hero-actions {
+    display: flex; gap: 1rem; justify-content: center; margin-top: 2.5rem;
+    animation: fadeUp 0.8s ease 0.6s both;
+  }
+  .btn-primary {
+    background: var(--terracotta); color: #fff;
+    padding: 0.9rem 2rem; border-radius: 2rem;
+    font-size: 0.9rem; font-weight: 500; letter-spacing: 0.05em;
+    text-decoration: none; transition: all 0.3s;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .btn-primary:hover { background: var(--terracotta-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(196,98,45,0.4); }
+  .btn-outline {
+    border: 1.5px solid rgba(245,237,216,0.4); color: var(--cream);
+    padding: 0.9rem 2rem; border-radius: 2rem;
+    font-size: 0.9rem; font-weight: 500; letter-spacing: 0.05em;
+    text-decoration: none; transition: all 0.3s;
+  }
+  .btn-outline:hover { border-color: var(--cream); background: rgba(245,237,216,0.1); }
+
+  .hero-scroll {
+    position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    color: rgba(245,237,216,0.4); font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
+    animation: fadeUp 1s ease 1s both;
+  }
+  .scroll-line {
+    width: 1px; height: 40px; background: linear-gradient(to bottom, rgba(245,237,216,0.4), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse { 0%,100%{opacity:0.4;transform:scaleY(1)} 50%{opacity:1;transform:scaleY(1.2)} }
+
+  @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+
+  /* ── TAGLINE STRIP ── */
+  .tagline-strip {
+    background: var(--olive); color: var(--cream);
+    padding: 1rem 0; overflow: hidden;
+  }
+  .tagline-inner {
+    display: flex; gap: 3rem; white-space: nowrap;
+    animation: marquee 20s linear infinite;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 1.1rem; letter-spacing: 0.05em;
+  }
+  .tagline-sep { color: var(--terracotta-light); }
+  @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+  /* ── ABOUT ── */
+  .about {
+    padding: 7rem 3rem;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 5rem; align-items: center;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .about-img-wrap {
+    position: relative;
+  }
+  .about-img-main {
+    width: 100%; aspect-ratio: 4/5; object-fit: cover;
+    border-radius: 2px;
+    background: linear-gradient(135deg, var(--olive) 0%, var(--terracotta) 100%);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .about-img-accent {
+    position: absolute; bottom: -20px; right: -20px;
+    width: 55%; aspect-ratio: 1;
+    border: 6px solid var(--cream);
+    background: linear-gradient(135deg, var(--terracotta-light) 0%, var(--gold) 100%);
+    border-radius: 2px;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .img-placeholder {
+    font-size: 4rem; opacity: 0.6;
+  }
+  .section-label {
+    font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--terracotta); font-weight: 500; margin-bottom: 0.8rem;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .section-label::before { content: ''; display: block; width: 24px; height: 1.5px; background: var(--terracotta); }
+  .about-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700; line-height: 1.2;
+    margin-bottom: 1.5rem;
+  }
+  .about-title em { color: var(--terracotta); font-style: italic; }
+  .about-text {
+    color: rgba(44,42,37,0.7); line-height: 1.8;
+    font-size: 1rem; margin-bottom: 1rem;
+  }
+  .about-stats {
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: 1.5rem; margin-top: 2.5rem;
+    padding-top: 2.5rem; border-top: 1px solid rgba(92,102,66,0.2);
+  }
+  .stat-num {
+    font-family: 'Playfair Display', serif; font-size: 2.5rem;
+    font-weight: 900; color: var(--terracotta); line-height: 1;
+  }
+  .stat-label { font-size: 0.78rem; color: rgba(44,42,37,0.6); margin-top: 0.3rem; letter-spacing: 0.05em; }
+
+  /* ── MENU ── */
+  .menu-section {
+    background: var(--charcoal); padding: 6rem 3rem;
+  }
+  .menu-header { text-align: center; margin-bottom: 3rem; }
+  .menu-header .section-label { justify-content: center; color: var(--gold); }
+  .menu-header .section-label::before { background: var(--gold); }
+  .menu-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 900;
+    color: var(--cream); margin-bottom: 1rem; margin-top: 0.5rem;
+  }
+  .menu-title em { font-style: italic; color: var(--terracotta-light); }
+  .menu-sub { color: rgba(245,237,216,0.5); font-size: 0.95rem; }
+
+  .menu-tabs {
+    display: flex; justify-content: center; gap: 0.5rem;
+    margin-bottom: 3rem; flex-wrap: wrap;
+  }
+  .tab-btn {
+    background: transparent; border: 1.5px solid rgba(245,237,216,0.2);
+    color: rgba(245,237,216,0.6); padding: 0.55rem 1.4rem;
+    border-radius: 2rem; cursor: pointer; font-size: 0.85rem;
+    font-family: 'DM Sans', sans-serif; font-weight: 500;
+    transition: all 0.3s; letter-spacing: 0.05em;
+    display: flex; align-items: center; gap: 0.4rem;
+  }
+  .tab-btn:hover { border-color: rgba(245,237,216,0.5); color: var(--cream); }
+  .tab-btn.active {
+    background: var(--terracotta); border-color: var(--terracotta);
+    color: #fff; box-shadow: 0 4px 16px rgba(196,98,45,0.4);
+  }
+
+  .menu-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem; max-width: 1200px; margin: 0 auto;
+  }
+  .menu-card {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(245,237,216,0.08);
+    border-radius: 4px; overflow: hidden; transition: all 0.3s;
+    cursor: pointer;
+  }
+  .menu-card:hover { transform: translateY(-4px); border-color: rgba(196,98,45,0.4); background: rgba(196,98,45,0.06); }
+  .menu-card-img {
+    width: 100%; height: 180px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3.5rem;
+    background: linear-gradient(135deg, rgba(92,102,66,0.3), rgba(196,98,45,0.2));
+  }
+  .menu-card-body { padding: 1.2rem; }
+  .menu-card-name {
+    font-family: 'Playfair Display', serif; font-size: 1.1rem;
+    font-weight: 700; color: var(--cream); margin-bottom: 0.3rem;
+  }
+  .menu-card-desc { font-size: 0.82rem; color: rgba(245,237,216,0.5); line-height: 1.5; margin-bottom: 0.8rem; }
+  .menu-card-footer { display: flex; align-items: center; justify-content: space-between; }
+  .menu-price { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--terracotta-light); }
+  .menu-tag {
+    font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.2rem 0.6rem; border-radius: 1rem;
+    background: rgba(92,102,66,0.3); color: var(--olive-light);
+  }
+
+  /* ── GALLERY ── */
+  .gallery-section { padding: 6rem 3rem; background: var(--cream-dark); }
+  .gallery-header { text-align: center; margin-bottom: 3rem; }
+  .gallery-header .section-label { justify-content: center; }
+  .gallery-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem); font-weight: 700;
+  }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(2, 220px);
+    gap: 0.8rem; max-width: 1200px; margin: 0 auto;
+  }
+  .g-cell {
+    border-radius: 2px; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3rem; transition: transform 0.4s, filter 0.4s;
+    cursor: pointer; position: relative;
+  }
+  .g-cell:hover { transform: scale(1.02); filter: brightness(1.1); }
+  .g-cell::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(44,42,37,0.5) 0%, transparent 50%);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .g-cell:hover::after { opacity: 1; }
+  .g-1 { grid-column: 1/5; grid-row: 1/3; background: linear-gradient(135deg, #7a5c3a, #c4622d); }
+  .g-2 { grid-column: 5/8; grid-row: 1/2; background: linear-gradient(135deg, #5c6642, #8a9a6a); }
+  .g-3 { grid-column: 8/10; grid-row: 1/2; background: linear-gradient(135deg, #c9a84c, #d4804a); }
+  .g-4 { grid-column: 10/13; grid-row: 1/3; background: linear-gradient(135deg, #3d3022, #c4622d80); }
+  .g-5 { grid-column: 5/7; grid-row: 2/3; background: linear-gradient(135deg, #c4622d, #c9a84c); }
+  .g-6 { grid-column: 7/10; grid-row: 2/3; background: linear-gradient(135deg, #4a6642, #5c6642); }
+
+  /* ── REVIEWS ── */
+  .reviews-section { padding: 6rem 3rem; background: var(--warm-white); }
+  .reviews-header { text-align: center; margin-bottom: 3.5rem; }
+  .reviews-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; margin-top: 0.5rem;
+  }
+  .reviews-title em { font-style: italic; color: var(--terracotta); }
+
+  .carousel { position: relative; max-width: 900px; margin: 0 auto; overflow: hidden; }
+  .carousel-track {
+    display: flex; transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .review-card {
+    min-width: 100%; padding: 0 1rem;
+  }
+  .review-inner {
+    background: var(--cream); border-radius: 4px;
+    padding: 2.5rem 3rem;
+    border: 1px solid rgba(92,102,66,0.15);
+    text-align: center; position: relative;
+  }
+  .review-quote {
+    font-family: 'Playfair Display', serif; font-size: 5rem;
+    color: var(--terracotta); opacity: 0.2; line-height: 0.5;
+    position: absolute; top: 1.5rem; left: 2rem;
+  }
+  .review-stars { color: var(--gold); font-size: 1rem; margin-bottom: 1.2rem; letter-spacing: 0.1em; }
+  .review-text {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 1.3rem; line-height: 1.7; color: var(--charcoal);
+    margin-bottom: 1.5rem;
+  }
+  .review-author { font-weight: 500; font-size: 0.85rem; color: var(--olive); letter-spacing: 0.05em; }
+  .review-loc { font-size: 0.75rem; color: rgba(44,42,37,0.4); margin-top: 0.2rem; }
+
+  .carousel-nav {
+    display: flex; justify-content: center; gap: 0.5rem; margin-top: 2rem;
+  }
+  .carousel-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(92,102,66,0.3); border: none; cursor: pointer;
+    transition: all 0.3s;
+  }
+  .carousel-dot.active { background: var(--terracotta); width: 24px; border-radius: 4px; }
+  .carousel-arrows { display: flex; justify-content: center; gap: 1rem; margin-top: 1rem; }
+  .carousel-arrow {
+    width: 40px; height: 40px; border-radius: 50%;
+    border: 1.5px solid rgba(92,102,66,0.3); background: transparent;
+    cursor: pointer; font-size: 1rem; color: var(--charcoal);
+    transition: all 0.3s; display: flex; align-items: center; justify-content: center;
+  }
+  .carousel-arrow:hover { background: var(--terracotta); border-color: var(--terracotta); color: #fff; }
+
+  /* ── HOURS & LOCATION ── */
+  .info-section {
+    background: var(--olive); padding: 5rem 3rem;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4rem; align-items: center;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .info-hours .section-label { color: var(--gold); }
+  .info-hours .section-label::before { background: var(--gold); }
+  .info-title {
+    font-family: 'Playfair Display', serif; font-size: 2.2rem;
+    font-weight: 700; color: var(--cream); margin: 0.5rem 0 1.5rem;
+  }
+  .hours-list { list-style: none; }
+  .hours-list li {
+    display: flex; justify-content: space-between;
+    padding: 0.7rem 0; border-bottom: 1px solid rgba(245,237,216,0.15);
+    color: rgba(245,237,216,0.8); font-size: 0.9rem;
+  }
+  .hours-list li:last-child { border-bottom: none; }
+  .hours-list .day { color: var(--cream); font-weight: 500; }
+  .hours-list .closed { color: var(--terracotta-light); }
+
+  .info-location .section-label { color: var(--gold); }
+  .info-location .section-label::before { background: var(--gold); }
+  .map-placeholder {
+    width: 100%; aspect-ratio: 4/3;
+    background: rgba(0,0,0,0.3); border-radius: 4px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    color: var(--cream); gap: 0.5rem; border: 1px solid rgba(245,237,216,0.1);
+    margin-top: 1rem;
+  }
+  .map-placeholder svg { opacity: 0.5; }
+  .location-addr {
+    color: rgba(245,237,216,0.7); font-size: 0.9rem; line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+  .location-addr strong { color: var(--cream); }
+
+  /* ── CTA ── */
+  .cta-section {
+    background: var(--terracotta); padding: 5rem 3rem;
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .cta-section::before {
+    content: ''; position: absolute; top: -50%; right: -10%;
+    width: 500px; height: 500px; border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+  }
+  .cta-section::after {
+    content: ''; position: absolute; bottom: -30%; left: -5%;
+    width: 300px; height: 300px; border-radius: 50%;
+    background: rgba(0,0,0,0.1);
+  }
+  .cta-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900;
+    color: #fff; margin-bottom: 0.8rem; position: relative; z-index: 1;
+  }
+  .cta-sub {
+    color: rgba(255,255,255,0.75); margin-bottom: 2.5rem;
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 1.2rem; position: relative; z-index: 1;
+  }
+  .whatsapp-btn {
+    display: inline-flex; align-items: center; gap: 0.8rem;
+    background: #25D366; color: #fff;
+    padding: 1rem 2.5rem; border-radius: 3rem;
+    font-size: 1rem; font-weight: 500; text-decoration: none;
+    transition: all 0.3s; position: relative; z-index: 1;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  .whatsapp-btn:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(0,0,0,0.3); background: #22c55e; }
+  .whatsapp-icon {
+    width: 24px; height: 24px; fill: #fff;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--charcoal); padding: 3rem;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1.5rem;
+  }
+  .footer-logo {
+    font-family: 'Playfair Display', serif; font-size: 1.4rem;
+    font-weight: 900; color: var(--cream);
+  }
+  .footer-logo span { color: var(--terracotta); }
+  .footer-tagline { font-size: 0.78rem; color: rgba(245,237,216,0.4); margin-top: 0.2rem; }
+  .footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .footer-links a {
+    color: rgba(245,237,216,0.5); text-decoration: none;
+    font-size: 0.82rem; transition: color 0.3s;
+  }
+  .footer-links a:hover { color: var(--terracotta-light); }
+  .footer-copy { color: rgba(245,237,216,0.3); font-size: 0.78rem; }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0; transform: translateY(40px);
+    transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  /* ── INFO WRAPPER ── */
+  .info-wrapper { background: var(--olive); }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .about { grid-template-columns: 1fr; padding: 4rem 1.5rem; gap: 2rem; }
+    .about-img-accent { display: none; }
+    .info-section { grid-template-columns: 1fr; padding: 4rem 1.5rem; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+    .g-1,.g-2,.g-3,.g-4,.g-5,.g-6 { grid-column: auto; grid-row: auto; height: 160px; }
+    footer { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">The <span>Munchies</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">Story</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#location">Visit Us</a></li>
+  </ul>
+  <a href="https://wa.me/919876543210?text=Hi!%20I%27d%20like%20to%20reserve%20a%20table%20at%20The%20Munchies." class="nav-cta" target="_blank">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Reserve a Table
+  </a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-blob hero-blob-1"></div>
+  <div class="hero-blob hero-blob-2"></div>
+
+  <!-- Floating food SVG accents -->
+  <svg class="food-accent food-accent-1" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="50" r="45" fill="#C4622D" opacity="0.6"/>
+    <circle cx="50" cy="50" r="30" fill="#F5EDD8" opacity="0.3"/>
+    <circle cx="35" cy="40" r="8" fill="#5C6642" opacity="0.8"/>
+    <circle cx="60" cy="45" r="6" fill="#C9A84C" opacity="0.8"/>
+    <circle cx="50" cy="60" r="7" fill="#C4622D" opacity="0.8"/>
+  </svg>
+  <svg class="food-accent food-accent-2" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="10" y="10" width="60" height="60" rx="8" fill="#5C6642" opacity="0.6"/>
+    <rect x="20" y="25" width="40" height="6" rx="3" fill="#F5EDD8" opacity="0.5"/>
+    <rect x="20" y="37" width="30" height="6" rx="3" fill="#F5EDD8" opacity="0.4"/>
+    <rect x="20" y="49" width="35" height="6" rx="3" fill="#F5EDD8" opacity="0.3"/>
+  </svg>
+  <svg class="food-accent food-accent-3" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <polygon points="30,5 55,50 5,50" fill="#C9A84C" opacity="0.6"/>
+    <circle cx="30" cy="35" r="8" fill="#F5EDD8" opacity="0.4"/>
+  </svg>
+
+  <div class="hero-content">
+    <div class="hero-badge">🌿 100% Vegetarian · Est. 2018 · Madurai</div>
+    <h1 class="hero-title">
+      Purely Good.
+      <em>Madurai's Favourite</em>
+      Veg Café.
+    </h1>
+    <p class="hero-sub">From wood-fired pizzas to steaming momos — crafted with love, served with warmth.</p>
+    <div class="hero-actions">
+      <a href="#menu" class="btn-primary">Explore Menu ↓</a>
+      <a href="#about" class="btn-outline">Our Story</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>scroll</span>
+  </div>
+</section>
+
+<!-- TAGLINE STRIP -->
+<div class="tagline-strip">
+  <div class="tagline-inner">
+    <span>Wood-Fired Pizzas</span><span class="tagline-sep">✦</span>
+    <span>Artisan Burgers</span><span class="tagline-sep">✦</span>
+    <span>Fresh Momos</span><span class="tagline-sep">✦</span>
+    <span>Wok-Tossed Chinese</span><span class="tagline-sep">✦</span>
+    <span>Silky Pastas</span><span class="tagline-sep">✦</span>
+    <span>100% Vegetarian</span><span class="tagline-sep">✦</span>
+    <span>Made with Love in Madurai</span><span class="tagline-sep">✦</span>
+    <span>Wood-Fired Pizzas</span><span class="tagline-sep">✦</span>
+    <span>Artisan Burgers</span><span class="tagline-sep">✦</span>
+    <span>Fresh Momos</span><span class="tagline-sep">✦</span>
+    <span>Wok-Tossed Chinese</span><span class="tagline-sep">✦</span>
+    <span>Silky Pastas</span><span class="tagline-sep">✦</span>
+    <span>100% Vegetarian</span><span class="tagline-sep">✦</span>
+    <span>Made with Love in Madurai</span><span class="tagline-sep">✦</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about">
+    <div class="about-img-wrap reveal">
+      <div class="about-img-main">
+        <span style="font-size:6rem; opacity:0.4;">🍕</span>
+      </div>
+      <div class="about-img-accent">
+        <span style="font-size:3rem; opacity:0.5;">🥗</span>
+      </div>
+    </div>
+    <div>
+      <div class="section-label reveal">Our Story</div>
+      <h2 class="about-title reveal reveal-delay-1">
+        Born from a <em>passion</em> for pure, joyful food
+      </h2>
+      <p class="about-text reveal reveal-delay-2">
+        What started as a small kitchen experiment in 2018 has grown into Madurai's most-loved vegetarian café. At The Munchies, we believe food should be fun, fresh, and full of flavour — without compromise.
+      </p>
+      <p class="about-text reveal reveal-delay-2">
+        Every pizza dough is hand-stretched, every momo wrapper is rolled fresh, every sauce simmers for hours. We don't just cook food — we craft experiences that bring people together.
+      </p>
+      <div class="about-stats reveal reveal-delay-3">
+        <div>
+          <div class="stat-num">6+</div>
+          <div class="stat-label">Years of flavour</div>
+        </div>
+        <div>
+          <div class="stat-num">50K+</div>
+          <div class="stat-label">Happy customers</div>
+        </div>
+        <div>
+          <div class="stat-num">4.8★</div>
+          <div class="stat-label">Google rating</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu" class="menu-section">
+  <div class="menu-header reveal">
+    <div class="section-label">What We Make</div>
+    <h2 class="menu-title">A menu built for <em>cravings</em></h2>
+    <p class="menu-sub">All vegetarian. All delicious. All made fresh every day.</p>
+  </div>
+
+  <div class="menu-tabs reveal">
+    <button class="tab-btn active" data-cat="pizza">🍕 Pizza</button>
+    <button class="tab-btn" data-cat="burgers">🍔 Burgers</button>
+    <button class="tab-btn" data-cat="chinese">🥢 Chinese</button>
+    <button class="tab-btn" data-cat="momos">🥟 Momos</button>
+    <button class="tab-btn" data-cat="pasta">🍝 Pasta</button>
+  </div>
+
+  <div class="menu-grid" id="menu-grid"></div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" class="gallery-section">
+  <div class="gallery-header reveal">
+    <div class="section-label">Food Gallery</div>
+    <h2 class="gallery-title">Eat with your eyes first</h2>
+  </div>
+  <div class="gallery-grid reveal">
+    <div class="g-cell g-1"><span>🍕</span></div>
+    <div class="g-cell g-2"><span>🥟</span></div>
+    <div class="g-cell g-3"><span>🍔</span></div>
+    <div class="g-cell g-4"><span>🍝</span></div>
+    <div class="g-cell g-5"><span>🥢</span></div>
+    <div class="g-cell g-6"><span>🍵</span></div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews" class="reviews-section">
+  <div class="reviews-header reveal">
+    <div class="section-label" style="justify-content:center;">What People Say</div>
+    <h2 class="reviews-title">Loved by <em>Madurai</em></h2>
+  </div>
+  <div class="carousel reveal">
+    <div class="carousel-track" id="carousel-track">
+      <div class="review-card">
+        <div class="review-inner">
+          <div class="review-quote">"</div>
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">The wood-fired pizza here is absolutely phenomenal! The crust is perfectly charred and chewy, the toppings are fresh, and you'd never guess it's 100% vegetarian. The Munchies has ruined all other pizzas for me.</p>
+          <div class="review-author">Karthikeyan R.</div>
+          <div class="review-loc">Anna Nagar, Madurai</div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-inner">
+          <div class="review-quote">"</div>
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">Came for the momos, stayed for everything else. The Szechuan sauce is fiery perfection, and the paneer momos are the most generous portions I've seen. This is our family's go-to spot now.</p>
+          <div class="review-author">Meenakshi Devi</div>
+          <div class="review-loc">Villapuram, Madurai</div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-inner">
+          <div class="review-quote">"</div>
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">The vibe is incredible — warm lighting, great music, and staff that actually cares. The mushroom pasta in white sauce is restaurant-quality comfort food. Highly recommend the loaded fries too!</p>
+          <div class="review-author">Arunachalam S.</div>
+          <div class="review-loc">KK Nagar, Madurai</div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-inner">
+          <div class="review-quote">"</div>
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">As someone who's been vegetarian for 15 years, finding a place that makes veggies this exciting is a dream. The crispy veggie burger beats any fast food chain hands down. Madurai needed The Munchies!</p>
+          <div class="review-author">Priya Lakshmi</div>
+          <div class="review-loc">Nagamalai Pudukottai</div>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-nav" id="carousel-dots"></div>
+    <div class="carousel-arrows">
+      <button class="carousel-arrow" id="prev-btn">←</button>
+      <button class="carousel-arrow" id="next-btn">→</button>
+    </div>
+  </div>
+</section>
+
+<!-- HOURS & LOCATION -->
+<div class="info-wrapper">
+  <div class="info-section" id="location">
+    <div class="info-hours reveal">
+      <div class="section-label">Opening Hours</div>
+      <h3 class="info-title">Come hungry,<br>leave happy.</h3>
+      <ul class="hours-list">
+        <li><span class="day">Monday – Thursday</span><span>11:00 AM – 10:30 PM</span></li>
+        <li><span class="day">Friday</span><span>11:00 AM – 11:00 PM</span></li>
+        <li><span class="day">Saturday</span><span>10:00 AM – 11:30 PM</span></li>
+        <li><span class="day">Sunday</span><span>10:00 AM – 11:00 PM</span></li>
+      </ul>
+    </div>
+    <div class="info-location reveal reveal-delay-1">
+      <div class="section-label">Find Us</div>
+      <h3 class="info-title">We're in the<br>heart of Madurai.</h3>
+      <p class="location-addr">
+        <strong>The Munchies Veg Café</strong><br>
+        42, Anna Nagar Main Road,<br>
+        Near Meenakshi Amman Temple,<br>
+        Madurai – 625 020, Tamil Nadu
+      </p>
+      <div class="map-placeholder">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+          <circle cx="12" cy="9" r="2.5"/>
+        </svg>
+        <span style="font-size:0.82rem; opacity:0.6;">The Munchies, Madurai</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2 class="cta-title">Ready for something delicious?</h2>
+  <p class="cta-sub">Reserve your table in seconds — just WhatsApp us!</p>
+  <a href="https://wa.me/919876543210?text=Hi!%20I%27d%20like%20to%20reserve%20a%20table%20at%20The%20Munchies." class="whatsapp-btn" target="_blank">
+    <svg class="whatsapp-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+    Reserve a Table on WhatsApp
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">The <span>Munchies</span></div>
+    <div class="footer-tagline">Purely Good. Purely Vegetarian. Madurai.</div>
+  </div>
+  <div class="footer-links">
+    <a href="#about">Our Story</a>
+    <a href="#menu">Menu</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#reviews">Reviews</a>
+    <a href="#location">Visit Us</a>
+  </div>
+  <div class="footer-copy">© 2025 The Munchies. Made with 🌿 in Madurai.</div>
+</footer>
+
+<script>
+// ── MENU DATA ──
+const menuData = {
+  pizza: [
+    { name: "Margherita Classica", desc: "San Marzano tomato, fresh mozzarella, hand-torn basil, extra virgin olive oil", price: "₹299", tag: "Bestseller", icon: "🍕" },
+    { name: "Paneer Tikka Pizza", desc: "Tandoori paneer, capsicum, onion, mint chutney base, mozzarella blend", price: "₹349", tag: "Spicy", icon: "🍕" },
+    { name: "Mushroom Truffle", desc: "Wild mushrooms, truffle oil, parmesan, fresh thyme, garlic cream base", price: "₹369", tag: "Chef's Pick", icon: "🍕" },
+    { name: "BBQ Loaded Veg", desc: "Sweet corn, jalapeño, olives, roasted peppers, smoky BBQ sauce, 4-cheese blend", price: "₹379", tag: "Loaded", icon: "🍕" },
+  ],
+  burgers: [
+    { name: "Crispy Veggie Crunch", desc: "Golden-fried veggie patty, sriracha slaw, pickles, chipotle mayo, toasted brioche", price: "₹249", tag: "Bestseller", icon: "🍔" },
+    { name: "Paneer Makhani Burger", desc: "Grilled paneer, creamy makhani sauce, caramelized onions, lettuce, toasted bun", price: "₹279", tag: "Indulgent", icon: "🍔" },
+    { name: "Black Bean Smash", desc: "Double smashed black bean patty, cheddar, pickled red onion, mustard aioli", price: "₹269", tag: "High Protein", icon: "🍔" },
+    { name: "Loaded Aloo Tikki", desc: "Spiced potato tikki, green chutney, tamarind glaze, onion, tomato, multigrain bun", price: "₹229", tag: "Desi Fav", icon: "🍔" },
+  ],
+  chinese: [
+    { name: "Wok Hakka Noodles", desc: "Hand-tossed egg noodles, seasonal vegetables, dark soy, ginger, sesame oil", price: "₹219", tag: "Classic", icon: "🥢" },
+    { name: "Chilli Paneer Dry", desc: "Crispy paneer cubes, bell peppers, spring onion, Szechuan sauce, toasted sesame", price: "₹249", tag: "Bestseller", icon: "🥢" },
+    { name: "Veg Manchurian", desc: "Crispy vegetable balls in rich Manchurian gravy, garnished with spring onion", price: "₹229", tag: "Spicy", icon: "🥢" },
+    { name: "Tofu Stir Fry Bowl", desc: "Silken tofu, bok choy, shiitake mushrooms, oyster sauce, steamed jasmine rice", price: "₹259", tag: "Healthy", icon: "🥢" },
+  ],
+  momos: [
+    { name: "Steamed Veg Momos", desc: "Hand-rolled wrappers, seasonal vegetable filling, served with fiery red chutney", price: "₹179", tag: "Classic", icon: "🥟" },
+    { name: "Paneer Tikka Momos", desc: "Spiced paneer stuffing, charred in tandoor, served with mint yogurt dip", price: "₹209", tag: "Chef's Pick", icon: "🥟" },
+    { name: "Fried Crispy Momos", desc: "Golden-fried dumplings, crunchy shell, mushroom & cabbage filling", price: "₹199", tag: "Bestseller", icon: "🥟" },
+    { name: "Szechuan Jhol Momos", desc: "Steamed momos bathed in spicy Szechuan broth, sliced green onion, chilli oil", price: "₹219", tag: "Fiery 🔥", icon: "🥟" },
+  ],
+  pasta: [
+    { name: "Penne Arrabiata", desc: "Hand-crushed San Marzano tomatoes, garlic, fresh chilli, parmesan, fresh basil", price: "₹249", tag: "Classic", icon: "🍝" },
+    { name: "Mushroom White Sauce", desc: "Pappardelle, wild mushrooms, truffle cream sauce, parmesan, toasted pine nuts", price: "₹279", tag: "Favourite", icon: "🍝" },
+    { name: "Pesto Linguine", desc: "Al dente linguine, homemade walnut pesto, roasted cherry tomatoes, burrata", price: "₹269", tag: "Seasonal", icon: "🍝" },
+    { name: "Baked Mac & Cheese", desc: "Three-cheese sauce, golden panko crust, caramelized onion, smoked paprika", price: "₹259", tag: "Comfort", icon: "🍝" },
+  ],
+};
+
+// Render menu
+function renderMenu(cat) {
+  const grid = document.getElementById('menu-grid');
+  grid.innerHTML = '';
+  menuData[cat].forEach((item, i) => {
+    const card = document.createElement('div');
+    card.className = 'menu-card';
+    card.style.animationDelay = `${i * 0.08}s`;
+    card.innerHTML = `
+      <div class="menu-card-img">${item.icon}</div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">${item.name}</div>
+        <div class="menu-card-desc">${item.desc}</div>
+        <div class="menu-card-footer">
+          <span class="menu-price">${item.price}</span>
+          <span class="menu-tag">${item.tag}</span>
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+  // animate in
+  requestAnimationFrame(() => {
+    grid.querySelectorAll('.menu-card').forEach((c, i) => {
+      c.style.opacity = '0'; c.style.transform = 'translateY(20px)';
+      c.style.transition = `all 0.4s ease ${i * 0.07}s`;
+      requestAnimationFrame(() => { c.style.opacity = '1'; c.style.transform = 'translateY(0)'; });
+    });
+  });
+}
+
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderMenu(btn.dataset.cat);
+  });
+});
+renderMenu('pizza');
+
+// ── CAROUSEL ──
+let current = 0;
+const reviews = document.querySelectorAll('.review-card');
+const track = document.getElementById('carousel-track');
+const dotsContainer = document.getElementById('carousel-dots');
+
+reviews.forEach((_, i) => {
+  const dot = document.createElement('button');
+  dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+  dot.addEventListener('click', () => goTo(i));
+  dotsContainer.appendChild(dot);
+});
+
+function goTo(n) {
+  current = (n + reviews.length) % reviews.length;
+  track.style.transform = `translateX(-${current * 100}%)`;
+  document.querySelectorAll('.carousel-dot').forEach((d, i) => d.classList.toggle('active', i === current));
+}
+
+document.getElementById('prev-btn').addEventListener('click', () => goTo(current - 1));
+document.getElementById('next-btn').addEventListener('click', () => goTo(current + 1));
+setInterval(() => goTo(current + 1), 5000);
+
+// ── SCROLL REVEAL ──
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// ── NAV SCROLL EFFECT ──
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('nav');
+  nav.style.boxShadow = window.scrollY > 50 ? '0 4px 24px rgba(44,42,37,0.12)' : 'none';
+});
+</script>
+</body>
+</html>
